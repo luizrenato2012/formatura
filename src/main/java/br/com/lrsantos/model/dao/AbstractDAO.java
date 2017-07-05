@@ -1,4 +1,4 @@
-package br.com.lrsantos.model.bean;
+package br.com.lrsantos.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;

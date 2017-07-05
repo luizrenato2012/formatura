@@ -5,7 +5,8 @@ public class Aluno {
 	private Integer id;
 	private String nome;
 	private String cpf;
-	private String endereco;
+	private Endereco endereco;
+	
 	private String telefone;
 	private Turma turma;
 	
@@ -28,12 +29,7 @@ public class Aluno {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
+	
 	public String getTelefone() {
 		return telefone;
 	}
@@ -46,7 +42,10 @@ public class Aluno {
 	public void setTurma(Turma turma) {
 		this.turma = turma;
 	}
-	
-	
-
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 }
