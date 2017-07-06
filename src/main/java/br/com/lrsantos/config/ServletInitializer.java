@@ -11,12 +11,12 @@ public class ServletInitializer extends AbstractAnnotationConfigDispatcherServle
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{WebAppConfig.class};
+		return new Class[]{WebAppConfig.class, JPAConfiguration.class};
 	}
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[]{"/"};
+		return new String[]{"/api/*"};
 	}
 
 }

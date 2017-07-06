@@ -1,23 +1,39 @@
 package br.com.lrsantos.model.bean;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="formatura.instituicao")
+@SequenceGenerator(sequenceName="formatura.seq_id_instituicao",name="SEQ_ID_INSTITUICAO",allocationSize=1)
+@NamedQueries({
+	@NamedQuery(name="Instituicao.LIST_ALL", query="select i from Instituicao i join fetch i.endereco"),
+	@NamedQuery(name="Instituicao.LIST_BY_NAME", query="select i from Instituicao i join fetch i.endereco where i.nome like ?")
+})
 public class Instituicao {
 	
 	@Id
-	@SequenceGenerator(sequenceName="formatura.seq_id_instituicao",name="SEQ_ID_INSTITUICAO",allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_ID_INSTITUICAO")
 	private Integer id;
 	
 	@Column(length=50)
 	private String nome;
 	
+	@OneToOne
+	@JoinColumn(name="id_endereco")
+	@Cascade(CascadeType.ALL)
 	private Endereco endereco;
 	
 	@Column(length=15)

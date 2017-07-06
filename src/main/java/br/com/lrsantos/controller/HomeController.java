@@ -23,7 +23,7 @@ public class HomeController {
 		Endereco endereco = new Endereco();
 		endereco.setLogradouro("Ednereco 1");
 		endereco.setNumero("123");
-		endereco.setUF("DF");
+//		endereco.setUF("DF");
 		aluno.setEndereco(endereco);	
 		return new ResponseEntity(aluno, HttpStatus.OK);
 	}
