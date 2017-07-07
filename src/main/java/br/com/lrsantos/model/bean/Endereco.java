@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+//
 @Entity
 @Table(name="formatura.endereco")
 @SequenceGenerator(sequenceName="formatura.seq_id_endereco",name="SEQ_ID_ENDERECO",allocationSize=1)

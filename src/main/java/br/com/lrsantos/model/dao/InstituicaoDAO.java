@@ -5,14 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.lrsantos.model.bean.Instituicao;
 
 @Repository
-@Transactional
 public class InstituicaoDAO {
 
 	@PersistenceContext

@@ -21,22 +21,22 @@
 				<input type="text" ng-model="instituicao.telefone" id="telefone"/>
 			</div>
 			
-			<div>
+		 <div>
 				<label for="logradouro">Logradouro</label>
 				<input type="text" ng-model="instituicao.endereco.logradouro" id="logradouro"/>
 			</div>
 			
 			<div>
 				<label for="cidade">Cidade</label>
-				<input type="text" ng-model="instituicao.endereco.cidade" id="endereco.cidade"/>
+				<input type="text" ng-model="instituicao.endereco.cidade" id="endereco"/>
 			</div>
 			
 			<div>
 				<label for="uf">UF</label>
-				<input type="text" ng-model="uf" id="instituicao.endereco.uf"/>
-			</div>
-			<button ng-click="grava()">Grava</button>
-			
+				<input type="text" ng-model="instituicao.endereco.uf" id="uf"/>
+			</div> 
+			<button ng-click="grava()">Grava</button> <br/>
+			<button ng-click="testa()">Testa</button>
 		</form>
 	</div>	
 

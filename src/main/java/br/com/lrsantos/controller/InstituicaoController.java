@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,17 +18,18 @@ import br.com.lrsantos.model.bean.Instituicao;
 import br.com.lrsantos.model.dao.InstituicaoDAO;
 
 @Controller
-@RequestMapping("/instituicao")
+@RequestMapping("/instituicoes")
 public class InstituicaoController {
 	
 	@Autowired
 	private InstituicaoDAO dao;
 //	private InstituicaoMemoryDAO dao;
 	
+	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity inclui(Instituicao instituicao) {
+	public ResponseEntity<String> inclui(@RequestBody Instituicao instituicao) {
 		try {
+			System.out.println(instituicao);
 			this.dao.insert(instituicao);
 			return new ResponseEntity(HttpStatus.CREATED);
 		} catch (Exception e  ) {
@@ -36,6 +38,12 @@ public class InstituicaoController {
 		}
 	}
 	
+//	@RequestMapping(method = RequestMethod.POST)
+//	public ResponseEntity<String> teste( @RequestBody Instituicao instituicao) {
+//		System.out.println(">>> Recebido " + instituicao);
+//		return new ResponseEntity<String>(HttpStatus.OK);
+//	}
+//	
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
 	public List<Instituicao> listaTodos() {
