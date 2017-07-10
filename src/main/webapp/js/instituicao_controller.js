@@ -2,13 +2,9 @@ var app = angular.module('formaturaApp',['InstituicaoServiceMdl']);
 
 app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function($scope,InstituicaoService) {
 	$scope.instituicao = {};
-	$scope.lista = [];
+	$scope.instituicoes = [];
 	$scope.argumento = '';
 	$scope.idSelecao = {};
-	
-//	$scope.instituicao.nome=null;
-//	$scope.instituicao.telefone=null;
-//	$scope.instituicao.endereco=null;
 	
 	$scope.grava = function() {
 		console.log('Gravando ' + $scope.instituicao);
@@ -28,7 +24,7 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 		
 		InstituicaoService.lista($scope.argumento)
 			.success(function(data,status,headers,config){
-				$scope.lista = data;
+				$scope.instituicoes = data;
 			})
 			.error(function(data,status, headers, config){
 				console.log(' status ' + status);
@@ -57,7 +53,7 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 		console.log('deletando '+ $scope.idSelecao);
 		InstituicaoService.deleta($scope.idSelecao)
 			.success(function(data,status,headers,config) {
-				this.lista($scope.argumento);
+				$scope.lista($scope.argumento);
 			})
 			.error(function(data,status,headers,config) {
 				console.log('Erro ao excluir');
@@ -67,5 +63,9 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 	$scope.seleciona = function(id) {
 		console.log('selecionado '+ id);
 		$scope.idSelecao = id;
+	}
+	
+	$scope.irPara = function(id) {
+		console.log('Indo para '+ id);
 	}
 }]);

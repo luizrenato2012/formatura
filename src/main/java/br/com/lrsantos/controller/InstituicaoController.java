@@ -79,6 +79,7 @@ public class InstituicaoController {
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
 	@ResponseBody
+	@Transactional
 	public ResponseEntity delete(@PathVariable("id")  Integer id) {
 		ResponseEntity response = null;
 		try {
