@@ -1,14 +1,39 @@
-var app = angular.module('formaturaApp',['InstituicaoServiceMdl']);
+var app = angular.module('InstituicaoControllerMdl',['InstituicaoServiceMdl']);
 
-app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function($scope,InstituicaoService) {
+app.controller('instituicaoController', ['$scope','instituicaoService' ,'$location', function($scope, instituicaoService, $location) {
 	$scope.instituicao = {};
 	$scope.instituicoes = [];
 	$scope.argumento = '';
 	$scope.idSelecao = {};
 	
+	$scope.busca = function(id) {
+		instituicaoService.busca(id)
+			.success(function(data,status,headers,config){
+				console.log(data);
+				$scope.instituicao = data;
+			})
+			.error(function(data,status, headers, config){
+				console.log(data + ' status ' + status);
+				
+			});
+	}
+	
+	$scope.init = function () {
+		console.log('url ' + $location.path());
+		var url =  $location.path();
+		var urlSplit = url.split('/');
+		if (url.indexOf('add') != -1) {
+			console.log('Adiciona');
+		} else if (urlSplit.length > 1){
+			console.log('Atualiza');
+			$scope.idSelecao = urlSplit[urlSplit.length-1];
+			$scope.busca($scope.idSelecao);
+		}
+	}();
+	
 	$scope.grava = function() {
 		console.log('Gravando ' + $scope.instituicao);
-		InstituicaoService.inclui($scope.instituicao)
+		instituicaoService.inclui($scope.instituicao)
 			.success(function(data,status,headers,config){
 				console.log(data);
 				$scope.instituicao = {};
@@ -22,7 +47,7 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 	$scope.lista = function() {
 		console.log('listando') ;
 		
-		InstituicaoService.lista($scope.argumento)
+		instituicaoService.lista($scope.argumento)
 			.success(function(data,status,headers,config){
 				$scope.instituicoes = data;
 			})
@@ -39,7 +64,7 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 		};
 		
 		console.log('Gravando ' + $scope.instituicao);
-		InstituicaoService.testa($scope.instituicao)
+		instituicaoService.testa($scope.instituicao)
 			.success(function(data,status,headers,config){
 				console.log(data);
 			})
@@ -51,7 +76,7 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 	
 	$scope.deleta = function() {
 		console.log('deletando '+ $scope.idSelecao);
-		InstituicaoService.deleta($scope.idSelecao)
+		instituicaoService.deleta($scope.idSelecao)
 			.success(function(data,status,headers,config) {
 				$scope.lista($scope.argumento);
 			})
@@ -67,5 +92,9 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 	
 	$scope.irPara = function(id) {
 		console.log('Indo para '+ id);
+	}
+	
+	$scope.edita = function(instituicao) {
+		$scope.instituicao = instituicao;
 	}
 }]);

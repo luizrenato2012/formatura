@@ -38,12 +38,6 @@ public class InstituicaoController {
 		}
 	}
 	
-//	@RequestMapping(method = RequestMethod.POST)
-//	public ResponseEntity<String> teste( @RequestBody Instituicao instituicao) {
-//		System.out.println(">>> Recebido " + instituicao);
-//		return new ResponseEntity<String>(HttpStatus.OK);
-//	}
-//	
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
 	public List<Instituicao> listaTodos() {

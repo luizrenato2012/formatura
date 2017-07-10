@@ -1,6 +1,6 @@
 var instituicaoService = angular.module('InstituicaoServiceMdl',[]);
 
-instituicaoService.service('InstituicaoService', function($http) {
+instituicaoService.service('instituicaoService', function($http) {
 	
 	this.inclui = function(instituicao) {
 		return $http.post('http://localhost:8080/formatura/api/v1/instituicoes', instituicao);
@@ -21,5 +21,9 @@ instituicaoService.service('InstituicaoService', function($http) {
 	
 	this.deleta = function(id) {
 		return $http.delete('http://localhost:8080/formatura/api/v1/instituicoes/'+id);
+	}
+	
+	this.busca = function(id) {
+		return $http.get('http://localhost:8080/formatura/api/v1/instituicoes/'+id);
 	}
 });
