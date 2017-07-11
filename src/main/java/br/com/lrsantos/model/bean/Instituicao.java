@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,6 +19,10 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @Table(name="formatura.instituicao")
 @SequenceGenerator(sequenceName="formatura.seq_id_instituicao",name="SEQ_ID_INSTITUICAO",allocationSize=1)
+@NamedQueries( {
+	@NamedQuery(name="Instituicao.LIST_ALL", query="select i from Instituicao i order by i.nome"),
+	@NamedQuery(name="Instituicao.LIST_BY_NOME", query="select i from Instituicao i where i.nome like ? order by i.nome")
+})
 public class Instituicao {
 	
 	@Id

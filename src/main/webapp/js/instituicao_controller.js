@@ -2,6 +2,10 @@ var app = angular.module('formaturaApp',['InstituicaoServiceMdl']);
 
 app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function($scope,InstituicaoService) {
 	$scope.instituicao = {};
+	$scope.lista = [];
+	$scope.argumento = '';
+	$scope.idSelecao = {};
+	
 //	$scope.instituicao.nome=null;
 //	$scope.instituicao.telefone=null;
 //	$scope.instituicao.endereco=null;
@@ -16,6 +20,18 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 			.error(function(data,status, headers, config){
 				console.log(data + ' status ' + status);
 				
+			});
+	}
+	
+	$scope.lista = function() {
+		console.log('listando') ;
+		
+		InstituicaoService.lista($scope.argumento)
+			.success(function(data,status,headers,config){
+				$scope.lista = data;
+			})
+			.error(function(data,status, headers, config){
+				console.log(' status ' + status);
 			});
 	}
 	
@@ -35,5 +51,21 @@ app.controller('InstituicaoController', ['$scope','InstituicaoService' ,function
 				console.log(data + ' status ' + status);
 				
 			});
+	}
+	
+	$scope.deleta = function() {
+		console.log('deletando '+ $scope.idSelecao);
+		InstituicaoService.deleta($scope.idSelecao)
+			.success(function(data,status,headers,config) {
+				this.lista($scope.argumento);
+			})
+			.error(function(data,status,headers,config) {
+				console.log('Erro ao excluir');
+			});
+	}
+	
+	$scope.seleciona = function(id) {
+		console.log('selecionado '+ id);
+		$scope.idSelecao = id;
 	}
 }]);

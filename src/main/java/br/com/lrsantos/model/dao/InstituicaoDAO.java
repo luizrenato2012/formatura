@@ -18,6 +18,7 @@ public class InstituicaoDAO {
 	private EntityManager entityManager;
 	
 	public void insert(Instituicao instituicao) {
+		instituicao.setNome(instituicao.getNome().toUpperCase());
 		this.entityManager.persist(instituicao);
 	}
 	
@@ -26,7 +27,11 @@ public class InstituicaoDAO {
 	}
 	
 	public void delete(Integer id) {
-		this.entityManager.merge(id);
+		Instituicao instituicao = this.load(id);
+		if(instituicao==null) {
+			throw new RuntimeException("Instituicao "+ id + " não encontrada");
+		}
+		this.entityManager.remove(instituicao);
 	}
 	
 	public Instituicao load(Integer id) {

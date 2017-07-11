@@ -76,5 +76,20 @@ public class InstituicaoController {
 		}
 		return responseEntity;
 	}
+	
+	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
+	@ResponseBody
+	public ResponseEntity delete(@PathVariable("id")  Integer id) {
+		ResponseEntity response = null;
+		try {
+			this.dao.delete(id);
+			response = new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
+		} catch (Exception e ) {
+			e.printStackTrace();
+			response = new ResponseEntity<>(new HeaderFactory().criaHeader("Erro", "Erro ao excluir"), 
+					HttpStatus.BAD_REQUEST);
+		}
+		return response;
+	}
 
 }
