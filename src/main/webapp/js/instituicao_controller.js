@@ -5,6 +5,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	$scope.instituicoes = [];
 	$scope.argumento = '';
 	$scope.idSelecao = {};
+	$scope.tipoTela = '';
 	
 	$scope.busca = function(id) {
 		instituicaoService.busca(id)
@@ -24,8 +25,10 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 		var urlSplit = url.split('/');
 		if (url.indexOf('add') != -1) {
 			console.log('Adiciona');
+			$scope.tipoTela = 'Adiciona ';
 		} else if (urlSplit.length > 1){
 			console.log('Atualiza');
+			$scope.tipoTela = 'Altera ';
 			$scope.idSelecao = urlSplit[urlSplit.length-1];
 			$scope.busca($scope.idSelecao);
 		}
@@ -56,7 +59,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 			});
 	}
 	
-	$scope.testa = function() {
+/*	$scope.testa = function() {
 		$scope.instituicao = {
 			id :1,
 			nome: 'Instituicao 1',
@@ -72,7 +75,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 				console.log(data + ' status ' + status);
 				
 			});
-	}
+	}*/
 	
 	$scope.deleta = function() {
 		console.log('deletando '+ $scope.idSelecao);
