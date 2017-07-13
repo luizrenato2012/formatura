@@ -7,6 +7,9 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	$scope.idSelecao = {};
 	$scope.tipoTela = '';
 	
+	$scope.classeMensagem='';
+	$scope.mensagem='';
+	
 	$scope.busca = function(id) {
 		instituicaoService.busca(id)
 			.success(function(data,status,headers,config){
@@ -36,15 +39,48 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	
 	$scope.grava = function() {
 		console.log('Gravando ' + $scope.instituicao);
-		instituicaoService.inclui($scope.instituicao)
+		var resValidacao = valida($scope.instituicao);
+		if(resValidacao!=''){
+			$scope.mensagem = 'Campos obrigatórios:'+ resValidacao;
+			$scope.classeMensagem = 'alert alert-danger';
+			return;
+		}
+		
+		instituicaoService.grava($scope.instituicao)
 			.success(function(data,status,headers,config){
 				console.log(data);
 				$scope.instituicao = {};
+				$scope.mensagem='Registro gravado com sucesso!';
+				$scope.classeMensagem = 'alert alert-info';
 			})
 			.error(function(data,status, headers, config){
-				console.log(data + ' status ' + status);
-				
+				console.log( ' status ' + status);
+				$scope.mensagem='<strong>Atenção</strong>Erro ao gravar.';
+				$scope.classeMensagem = 'alert alert-info';
 			});
+	}
+	
+	$scope.valida = function (instituicao){
+		var camposInvalidos = [];
+		var retorno=[];
+		if(instituicao.nome== null || instituicao.nome==''){
+			camposInvalidos.push('nome');
+		}
+		if(instituicao.telefone== null || instituicao.telefone==''){
+			camposInvalidos.push='telefone';
+		}
+		
+		if (camposInvalidos.length > 0 ) {
+			for(var i; camposInvalidos.length; i++){
+				retorno+=camposInvalidos[i]+',';
+			}
+		}
+		return retorno;
+	}
+	
+	$scope.exibeMensagem(mensagem,tipo){
+		$scope.classeMensagem='';
+		$scope.mensagem='mensagem';
 	}
 	
 	$scope.lista = function() {
@@ -58,24 +94,6 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 				console.log(' status ' + status);
 			});
 	}
-	
-/*	$scope.testa = function() {
-		$scope.instituicao = {
-			id :1,
-			nome: 'Instituicao 1',
-			telefone: '222-2222',
-		};
-		
-		console.log('Gravando ' + $scope.instituicao);
-		instituicaoService.testa($scope.instituicao)
-			.success(function(data,status,headers,config){
-				console.log(data);
-			})
-			.error(function(data,status, headers, config){
-				console.log(data + ' status ' + status);
-				
-			});
-	}*/
 	
 	$scope.deleta = function() {
 		console.log('deletando '+ $scope.idSelecao);
@@ -99,5 +117,13 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	
 	$scope.edita = function(instituicao) {
 		$scope.instituicao = instituicao;
+	}
+	
+	$scope.cancela = function() {
+		$scope.instituicao = {};
+	}
+	
+	$Scope.limpaMensagem = function() {
+		$scope.mensagem='';
 	}
 }]);

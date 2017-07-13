@@ -2,8 +2,13 @@ var instituicaoService = angular.module('InstituicaoServiceMdl',[]);
 
 instituicaoService.service('instituicaoService', function($http) {
 	
-	this.inclui = function(instituicao) {
-		return $http.post('http://localhost:8080/formatura/api/v1/instituicoes', instituicao);
+	this.grava = function(instituicao) {
+		if(instituicao.id!=null){
+			return $http.put('http://localhost:8080/formatura/api/v1/instituicoes', instituicao);
+		} else {
+			return $http.post('http://localhost:8080/formatura/api/v1/instituicoes', instituicao);
+		}
+		
 	}
 	
 	this.testa = function(teste) {

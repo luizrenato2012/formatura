@@ -23,7 +23,6 @@ public class InstituicaoController {
 	
 	@Autowired
 	private InstituicaoDAO dao;
-//	private InstituicaoMemoryDAO dao;
 	
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
@@ -37,6 +36,22 @@ public class InstituicaoController {
 			return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);	
 		}
 	}
+	
+	@RequestMapping(method=RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity atualiza(@RequestBody Instituicao instituicao) {
+		ResponseEntity responseEntity = null;
+		try{
+			this.dao.update(instituicao);
+			responseEntity = new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
+		} catch (Exception e ) {
+			e.printStackTrace();
+			responseEntity = new ResponseEntity(new HeaderFactory().criaHeader("XErro", "Erro ao atualizar"),
+					HttpStatus.EXPECTATION_FAILED);
+		}
+		return responseEntity;
+	}
+	
 	
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseBody
@@ -56,21 +71,6 @@ public class InstituicaoController {
 		return this.dao.listByNome(nome);
 	}
 	
-	@RequestMapping(method=RequestMethod.PUT)
-	@ResponseBody
-	public ResponseEntity atualiza(Instituicao instituicao) {
-		ResponseEntity responseEntity = null;
-		try{
-			this.dao.update(instituicao);
-			responseEntity = new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
-		} catch (Exception e ) {
-			e.printStackTrace();
-			responseEntity = new ResponseEntity(new HeaderFactory().criaHeader("erro", "Erro ao atualizar"),
-					HttpStatus.EXPECTATION_FAILED);
-		}
-		return responseEntity;
-	}
-	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
 	@ResponseBody
 	@Transactional
@@ -81,7 +81,7 @@ public class InstituicaoController {
 			response = new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
 		} catch (Exception e ) {
 			e.printStackTrace();
-			response = new ResponseEntity<>(new HeaderFactory().criaHeader("Erro", "Erro ao excluir"), 
+			response = new ResponseEntity<>(new HeaderFactory().criaHeader("XErro", "Erro ao excluir"), 
 					HttpStatus.BAD_REQUEST);
 		}
 		return response;
