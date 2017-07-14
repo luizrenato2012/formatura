@@ -29,7 +29,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 		if (url.indexOf('add') != -1) {
 			console.log('Adiciona');
 			$scope.tipoTela = 'Adiciona ';
-		} else if (urlSplit.length > 1){
+		} else if (urlSplit.length > 2){
 			console.log('Atualiza');
 			$scope.tipoTela = 'Altera ';
 			$scope.idSelecao = urlSplit[urlSplit.length-1];
@@ -39,10 +39,9 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	
 	$scope.grava = function() {
 		console.log('Gravando ' + $scope.instituicao);
-		var resValidacao = valida($scope.instituicao);
+		var resValidacao = $scope.valida($scope.instituicao);
 		if(resValidacao!=''){
-			$scope.mensagem = 'Campos obrigatórios:'+ resValidacao;
-			$scope.classeMensagem = 'alert alert-danger';
+			$scope.exibeMensagem('alert alert-danger', 'Campos obrigatórios: '+ resValidacao);
 			return;
 		}
 		
@@ -50,13 +49,12 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 			.success(function(data,status,headers,config){
 				console.log(data);
 				$scope.instituicao = {};
-				$scope.mensagem='Registro gravado com sucesso!';
-				$scope.classeMensagem = 'alert alert-info';
+				$scope.exibeMensagem('alert alert-info', 'Registro gravado com sucesso!');
+			//	$scope.classeMensagem = 'alert alert-info';
 			})
 			.error(function(data,status, headers, config){
 				console.log( ' status ' + status);
-				$scope.mensagem='<strong>Atenção</strong>Erro ao gravar.';
-				$scope.classeMensagem = 'alert alert-info';
+				$scope.exibeMensagem('alert alert-danger', 'Atenção: Erro ao gravar');
 			});
 	}
 	
@@ -67,20 +65,23 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 			camposInvalidos.push('nome');
 		}
 		if(instituicao.telefone== null || instituicao.telefone==''){
-			camposInvalidos.push='telefone';
+			camposInvalidos.push('telefone');
 		}
 		
 		if (camposInvalidos.length > 0 ) {
-			for(var i; camposInvalidos.length; i++){
+			for(var i=0; i < camposInvalidos.length; i++){
 				retorno+=camposInvalidos[i]+',';
 			}
+		}
+		if(retorno.length > 0) {
+			retorno = retorno.substring(0, retorno.length-1);
 		}
 		return retorno;
 	}
 	
-	$scope.exibeMensagem = function (mensagem,tipo){
-		$scope.classeMensagem='';
-		$scope.mensagem='mensagem';
+	$scope.exibeMensagem = function (tipo, mensagem){
+		$scope.classeMensagem=tipo;
+		$scope.mensagem=mensagem;
 	}
 	
 	$scope.lista = function() {

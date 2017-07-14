@@ -20,21 +20,21 @@
 		
 		<div class="form-group col-md-4">
 			<label for="numero" class="form-label">Nº</label> 
-			<input type="text" ng-model="instituicao.endereco.numero" id="numero"  class="form-control" placeholder="Digite o numero" ng-blur="limpaMensagem()/>
+			<input type="text" ng-model="instituicao.endereco.numero" id="numero"  class="form-control" placeholder="Digite o numero" ng-blur="limpaMensagem()"/>
 		</div>
 
 		<div class="form-group col-md-10">
 			<label for="cidade" class="form-label">Cidade</label> 
-			<input type="text" ng-model="instituicao.endereco.cidade" id="endereco" class="form-control" placeholder="Digite a cidade" ng-blur="limpaMensagem()/>
+			<input type="text" ng-model="instituicao.endereco.cidade" id="endereco" class="form-control" placeholder="Digite a cidade" ng-blur="limpaMensagem()"/>
 		</div>
 
 		<div class="form-group col-md-2" >
 			<label for="uf" class="form-label">UF</label> 
-			<input type="text" ng-model="instituicao.endereco.uf" id="uf" class="form-control" placeholder="Digite a UF" ng-blur="limpaMensagem()/>
+			<input type="text" ng-model="instituicao.endereco.uf" id="uf" class="form-control" placeholder="Digite a UF" ng-blur="limpaMensagem()"/>
 		</div>
 		
-		<div ng-show="mensagem!=''" class="classMensagem">
-			<div>{{mensagem}}</div>
+		<div class="form-group col-md-12"  ng-show="mensagem!=-''">
+			<div ng-class="classeMensagem">	{{mensagem}}</div>
 		</div>
 		
 		<div class="rows">
@@ -46,5 +46,7 @@
 			</div>
 		</div>
 	</form>
+
+	
 </div>
 

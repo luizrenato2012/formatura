@@ -1,5 +1,6 @@
 package br.com.lrsantos.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class InstituicaoController {
 	public ResponseEntity<String> inclui(@RequestBody Instituicao instituicao) {
 		try {
 			System.out.println(instituicao);
+			this.validaInstituicao(instituicao);
 			this.dao.insert(instituicao);
 			return new ResponseEntity(HttpStatus.CREATED);
 		} catch (Exception e  ) {
@@ -36,6 +38,33 @@ public class InstituicaoController {
 			return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);	
 		}
 	}
+	
+	private void validaInstituicao(Instituicao instiuicao) {
+		List<String >valoresInvalidos = new ArrayList<String>();
+		String mensagem = "";
+		
+		if(instiuicao==null){
+			throw new ValidacaoException("Produto invalido");
+		}
+		
+		String nome = instiuicao.getNome();
+		String telefone = instiuicao.getTelefone();
+		
+		if(nome==null || nome.equals("")){
+			valoresInvalidos.add(nome);
+		}
+		
+		if(telefone==null || telefone.equals("")){
+			valoresInvalidos.add(telefone);
+		}
+		
+		if(valoresInvalidos.size() != 0){
+			
+		}
+		
+	}
+	
+	
 	
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseBody
