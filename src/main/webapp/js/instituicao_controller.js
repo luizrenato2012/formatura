@@ -78,7 +78,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 		return retorno;
 	}
 	
-	$scope.exibeMensagem(mensagem,tipo){
+	$scope.exibeMensagem = function (mensagem,tipo){
 		$scope.classeMensagem='';
 		$scope.mensagem='mensagem';
 	}
@@ -123,7 +123,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 		$scope.instituicao = {};
 	}
 	
-	$Scope.limpaMensagem = function() {
+	$scope.limpaMensagem = function() {
 		$scope.mensagem='';
 	}
 }]);
