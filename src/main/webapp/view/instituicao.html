@@ -1,16 +1,16 @@
 <div id="main" class="container-fluid">
 	<h3 class="page-header">{{tipoTela}} Instituição</h3>
-	<form name="form" novalidate>
+	<form name="frm_instituicao" novalidate>
 		<div class="form-group col-md-8">
 			<label for="nome" class="form-label">Nome</label>
-			<input type="text"  ng-model="instituicao.nome" id="nome" name="nome" class="form-control" placeholder="Digite o nome" required/>
-		<!-- <span class="error" ng-show="form.nome.$dirty && form.nome.$error.required && form.$invalid">Nome obrigat&oacute;rio</span>   -->
+			<input type="text"  ng-model="instituicao.nome" id="nome" name="nome" class="form-control" placeholder="Digite o nome" ng-required="true"/>
+			<span class="error_message" ng-show="frm_instituicao.nome.$dirty && frm_instituicao.nome.$error.required ">Nome obrigat&oacute;rio</span>   
 		</div>
 
 		<div class="form-group col-md-4">
 			<label for="telefone" class="form-label">Telefone</label> 
-			<input type="text" ng-model="instituicao.telefone" id="telefone" class="form-control" name="telefone" placeholder="Digite o telefone" required/>
-		<!-- <span class="error" ng-show="form.telefone.$dirty && form.telefone.$error.required && form.$invalid">Telefone obrigat&oacute;rio</span> -->
+			<input type="text" ng-model="instituicao.telefone" id="telefone" class="form-control" name="telefone" placeholder="Digite o telefone" ng-required="true"/>
+		 	<span class="error_message" ng-show="frm_instituicao.telefone.$dirty && frm_instituicao.telefone.$error.required ">Telefone obrigat&oacute;rio</span>
 		</div>
 
 		<div class="form-group col-md-8">
@@ -20,29 +20,28 @@
 		
 		<div class="form-group col-md-4">
 			<label for="numero" class="form-label">Nº</label> 
-			<input type="text" ng-model="instituicao.endereco.numero" id="numero"  class="form-control" placeholder="Digite o numero" ng-blur="limpaMensagem()"/>
+			<input type="text" ng-model="instituicao.endereco.numero" id="numero"  class="form-control" placeholder="Digite o numero" />
 		</div>
 
 		<div class="form-group col-md-10">
 			<label for="cidade" class="form-label">Cidade</label> 
-			<input type="text" ng-model="instituicao.endereco.cidade" id="endereco" class="form-control" placeholder="Digite a cidade" ng-blur="limpaMensagem()"/>
+			<input type="text" ng-model="instituicao.endereco.cidade" id="endereco" class="form-control" placeholder="Digite a cidade" />
 		</div>
 
 		<div class="form-group col-md-2" >
 			<label for="uf" class="form-label">UF</label> 
-			<input type="text" ng-model="instituicao.endereco.uf" id="uf" class="form-control" placeholder="Digite a UF" ng-blur="limpaMensagem()"/>
+			<input type="text" ng-model="instituicao.endereco.uf" id="uf" class="form-control" placeholder="Digite a UF" />
 		</div>
 		
-		<div class="form-group col-md-12"  ng-show="mensagem!=-''">
+		<div class="form-group col-md-12"  ng-show="mensagem!='' && !frm_instituicao.$dirty">
 			<div ng-class="classeMensagem">	{{mensagem}}</div>
 		</div>
 		
 		<div class="rows">
 			<div class="col-md-12">
-				<!-- <button ng-click="grava()" class="btn btn-primary" ng-disabled="form.$invalid">Grava</button> -->
-				<button ng-click="grava()" class="btn btn-primary">Grava</button>
-				<button ng-click="cancela()" class="btn btn-default">Cancelar</button>
-			<!-- <a href="index.html" class="btn btn-default">Cancelar</a>  -->
+				<!-- <button ng-click="grava()" class="btn btn-primary" ng-disabled="frm_instituicao$invalid">Grava</button> -->
+				<button ng-click="grava()" class="btn btn-primary" ng-disabled="frm_instituicao.$invalid">Grava</button>
+				<button ng-click="cancela()" class="btn btn-default" ng-disabled="!frm_instituicao.$dirty">Cancelar</button>
 			</div>
 		</div>
 	</form>

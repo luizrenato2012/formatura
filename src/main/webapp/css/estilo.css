@@ -1,4 +1,13 @@
-.error {
-	color: #ffffff;
-/*	background-color: #ff0000; */
+.error_message {
+	color: #FF0000;
+	padding: 2px;
 }
+
+/* input.ng-invalid.ng-touched {
+	border-color: #ff0000;
+} */
+
+/*
+input.ng-valid {
+	border-color: #000000;
+} */

@@ -6,6 +6,8 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	$scope.argumento = '';
 	$scope.idSelecao = {};
 	$scope.tipoTela = '';
+	$scope.copiaEdicao = {};
+	$scope.isEdicao ;
 	
 	$scope.classeMensagem='';
 	$scope.mensagem='';
@@ -15,6 +17,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 			.success(function(data,status,headers,config){
 				console.log(data);
 				$scope.instituicao = data;
+				$scope.copiaEdicao = angular.copy($scope.instituicao);
 			})
 			.error(function(data,status, headers, config){
 				console.log(data + ' status ' + status);
@@ -28,29 +31,36 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 		var urlSplit = url.split('/');
 		if (url.indexOf('add') != -1) {
 			console.log('Adiciona');
-			$scope.tipoTela = 'Adiciona ';
+			setAdicao();
 		} else if (urlSplit.length > 2){
 			console.log('Atualiza');
-			$scope.tipoTela = 'Altera ';
-			$scope.idSelecao = urlSplit[urlSplit.length-1];
-			$scope.busca($scope.idSelecao);
+			setEdicao(urlSplit);
 		}
 	}();
 	
+	function setEdicao (urlSplit) {
+		$scope.tipoTela = 'Altera ';
+		$scope.idSelecao = urlSplit[urlSplit.length-1];
+		$scope.busca($scope.idSelecao);
+		$scope.isEdicao =true;
+	}
+	
+	function setAdicao() {
+		$scope.tipoTela = 'Adiciona ';
+		$scope.isEdicao = false;
+		$scope.copiaEdicao = false;
+
+	}
+	
 	$scope.grava = function() {
 		console.log('Gravando ' + $scope.instituicao);
-		var resValidacao = $scope.valida($scope.instituicao);
-		if(resValidacao!=''){
-			$scope.exibeMensagem('alert alert-danger', 'Campos obrigatórios: '+ resValidacao);
-			return;
-		}
 		
 		instituicaoService.grava($scope.instituicao)
 			.success(function(data,status,headers,config){
 				console.log(data);
 				$scope.instituicao = {};
 				$scope.exibeMensagem('alert alert-info', 'Registro gravado com sucesso!');
-			//	$scope.classeMensagem = 'alert alert-info';
+				$scope.frm_instituicao.$setPristine(true);
 			})
 			.error(function(data,status, headers, config){
 				console.log( ' status ' + status);
@@ -85,7 +95,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.lista = function() {
-		console.log('listando') ;
+	//	console.log('listando') ;
 		
 		instituicaoService.lista($scope.argumento)
 			.success(function(data,status,headers,config){
@@ -97,7 +107,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.deleta = function() {
-		console.log('deletando '+ $scope.idSelecao);
+	//	console.log('deletando '+ $scope.idSelecao);
 		instituicaoService.deleta($scope.idSelecao)
 			.success(function(data,status,headers,config) {
 				$scope.lista($scope.argumento);
@@ -108,7 +118,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.seleciona = function(id) {
-		console.log('selecionado '+ id);
+	//	console.log('selecionado '+ id);
 		$scope.idSelecao = id;
 	}
 	
@@ -121,7 +131,14 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.cancela = function() {
-		$scope.instituicao = {};
+		//$scope.instituicao = {}
+		$scope.frm_instituicao.$setPristine(true);
+		if ($scope.isEdicao==true){
+			$scope.instituicao = angular.copy($scope.copiaEdicao);
+		} else {
+			$scope.instituicao = {};
+		}
+		$scope.mensagem='';
 	}
 	
 	$scope.limpaMensagem = function() {

@@ -61,11 +61,9 @@ public class InstituicaoController {
 		if(valoresInvalidos.size() != 0){
 			
 		}
-		
 	}
 	
-	
-	
+	@Transactional
 	@RequestMapping(method=RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity atualiza(@RequestBody Instituicao instituicao) {
