@@ -64,6 +64,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 			})
 			.error(function(data,status, headers, config){
 				console.log( ' status ' + status);
+				$scope.frm_instituicao.$setPristine(false);
 				$scope.exibeMensagem('alert alert-danger', 'Atenção: Erro ao gravar');
 			});
 	}
@@ -95,7 +96,6 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.lista = function() {
-	//	console.log('listando') ;
 		
 		instituicaoService.lista($scope.argumento)
 			.success(function(data,status,headers,config){
@@ -107,7 +107,6 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.deleta = function() {
-	//	console.log('deletando '+ $scope.idSelecao);
 		instituicaoService.deleta($scope.idSelecao)
 			.success(function(data,status,headers,config) {
 				$scope.lista($scope.argumento);

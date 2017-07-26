@@ -37,6 +37,10 @@
 			<div ng-class="classeMensagem">	{{mensagem}}</div>
 		</div>
 		
+		<div class="form-group col-md-12 alert alert-danger"  ng-show="mensagemErro!=''">
+			<div ng-class="classeMensagem">	{{mensagemErro}}</div>
+		</div>
+		
 		<div class="rows">
 			<div class="col-md-12">
 				<!-- <button ng-click="grava()" class="btn btn-primary" ng-disabled="frm_instituicao$invalid">Grava</button> -->

@@ -45,7 +45,7 @@ public class InstituicaoDAO {
 	
 	public List<Instituicao> listByNome(String nome) {
 		Query query = this.entityManager.createNamedQuery("Instituicao.LIST_BY_NOME");
-		query.setParameter(1, nome+"%");
+		query.setParameter(1, "%" + nome.toUpperCase()+"%");
 		return query.getResultList();
 	}
 	
