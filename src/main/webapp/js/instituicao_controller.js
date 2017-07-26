@@ -144,4 +144,21 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	$scope.limpaMensagem = function() {
 		$scope.mensagem='';
 	}
+	
+	$scope.exibe = function() {
+		console.log('botao clicado 2');
+		
+		$('#delete-modal').modal({
+			keyboard: false
+		});
+	}
+	
 }]);
+
+function acionaBotao (evento) {
+	console.log('botao clicado 2');
+	
+	$('#delete-modal').modal({
+		keyboard: false
+	});
+};

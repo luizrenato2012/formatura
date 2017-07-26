@@ -8,7 +8,6 @@ instituicaoService.service('instituicaoService', function($http) {
 		} else {
 			return $http.post('http://localhost:8080/formatura/api/v1/instituicoes', instituicao);
 		}
-		
 	}
 	
 	this.testa = function(teste) {
