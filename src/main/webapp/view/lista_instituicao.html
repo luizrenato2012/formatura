@@ -32,7 +32,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat ="instituicao in instituicoes" ng-click="seleciona(instituicao.id)">
+				<!-- 	<tr ng-repeat ="instituicao in instituicoes" ng-click="seleciona(instituicao.id)"> -->
+					<tr dir-paginate ="instituicao in instituicoes|orderBy:sortKey:reverse|filter:search|itemsPerPage:5" ng-click="seleciona(instituicao.id)">
 						<td>{{instituicao.id}}</td>
 						<td>{{instituicao.nome}}</td>
 						<td class="actions"> 
@@ -53,25 +54,28 @@
 					</tr>
 				</tbody>
 			</table>
+			<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
 		</div>
 	</div>
 
-	<div id="bottom" class="row">
-		<div class="col-md-12">
-			<ul class="pagination">
+<!-- 	<div id="bottom" class="row"> -->
+<!-- 		<div class="col-md-12"> -->
+<!-- 			<ul class="pagination"> -->
 			<!-- <li class="disabled"><a>&lt; Anterior</a> </li>    -->
 			<!-- <li class="disabled"><a>1</a></li>  -->
 			<!-- <li><a href="#" ng-click="irPara(2)">2</a></li> -->
 			<!-- <li><a href="#" ng-click="irPara(3)">3</a></li>  -->
 			<!-- <li><a href="#" ng-click="irPara(0)">0</a></li>  -->
 			<!-- <li><a href="#" ng-click="irPara(1)">1</a></li>  -->
-				<l1><button ng-click="irPara(1)" class="botao_paginator active">1</button></l1>
-				<l1><button ng-click="irPara(2)" class="botao_paginator">2</button></l1>
-				<l1><button ng-click="irPara(3)" class="botao_paginator">3</button></l1>
+<!-- 				<l1><button ng-click="irPara(1)" class="botao_paginator active">1</button></l1> -->
+<!-- 				<l1><button ng-click="irPara(2)" class="botao_paginator">2</button></l1> -->
+<!-- 				<l1><button ng-click="irPara(3)" class="botao_paginator">3</button></l1> -->
 			<!-- <li class="next"><a href="#" rel="next">Próximo &gt;</a></li>  -->
-			</ul>	
-		</div>  
-	</div>
+		<!-- 	</ul>	 -->
+	<!-- 	</div>   -->
+	<!-- </div> -->
+	
+	
 		<!-- Modal -->
 	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
 	    <div class="modal-dialog" role="document">

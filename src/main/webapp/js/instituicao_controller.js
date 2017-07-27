@@ -1,4 +1,4 @@
-var app = angular.module('InstituicaoControllerMdl',['InstituicaoServiceMdl']);
+var app = angular.module('InstituicaoControllerMdl',['InstituicaoServiceMdl','angularUtils.directives.dirPagination']);
 
 app.controller('instituicaoController', ['$scope','instituicaoService' ,'$location', function($scope, instituicaoService, $location) {
 	$scope.instituicao = {};
