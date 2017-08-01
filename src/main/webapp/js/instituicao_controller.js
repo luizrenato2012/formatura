@@ -7,10 +7,11 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	$scope.idSelecao = {};
 	$scope.tipoTela = '';
 	$scope.copiaEdicao = {};
-	$scope.isEdicao ;
+	$scope.isEdicao;
 	
 	$scope.classeMensagem='';
 	$scope.mensagem='';
+	$scope.mensagemErro='';
 	
 	$scope.busca = function(id) {
 		instituicaoService.busca(id)
@@ -53,7 +54,7 @@ app.controller('instituicaoController', ['$scope','instituicaoService' ,'$locati
 	}
 	
 	$scope.grava = function() {
-		console.log('Gravando ' + $scope.instituicao);
+		//console.log('Gravando ' + $scope.instituicao);
 		
 		instituicaoService.grava($scope.instituicao)
 			.success(function(data,status,headers,config){
