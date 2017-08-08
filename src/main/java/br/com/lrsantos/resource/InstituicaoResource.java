@@ -1,6 +1,5 @@
 package br.com.lrsantos.resource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.lrsantos.model.bean.Instituicao;
 import br.com.lrsantos.model.dao.InstituicaoDAO;
+import br.com.lrsantos.model.service.InstituicaoService;
 
 @RestController
 @RequestMapping("/instituicoes")
@@ -27,6 +26,9 @@ public class InstituicaoResource {
 	
 	@Autowired
 	private InstituicaoDAO dao;
+	
+	@Autowired
+	private InstituicaoService service;
 	
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
@@ -36,19 +38,11 @@ public class InstituicaoResource {
 	}
 	
 	@Transactional
-	@RequestMapping(method=RequestMethod.PUT)
+	@RequestMapping(method=RequestMethod.PUT,value="/{id}")
 	@ResponseBody
-	public ResponseEntity atualiza(@RequestBody Instituicao instituicao) {
-		ResponseEntity responseEntity = null;
-		try{
-			this.dao.update(instituicao);
-			responseEntity = new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
-		} catch (Exception e ) {
-			e.printStackTrace();
-			responseEntity = new ResponseEntity(new HeaderFactory().criaHeader("XErro", "Erro ao atualizar"),
-					HttpStatus.EXPECTATION_FAILED);
-		}
-		return responseEntity;
+	public ResponseEntity atualiza(@PathVariable Integer id, @Valid @RequestBody Instituicao instituicao) {
+		this.service.update(id,instituicao);
+		return new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
 	}
 	
 	
@@ -60,8 +54,13 @@ public class InstituicaoResource {
 	
 	@RequestMapping(method=RequestMethod.GET,value="/{id}")
 	@ResponseBody
-	public Instituicao procura(@PathVariable("id")int id) {
-		return this.dao.load(id);
+	public ResponseEntity procura(@PathVariable("id")int id) {
+		Instituicao instituicao = this.dao.load(id);
+		if(instituicao!=null){
+			return ResponseEntity.ok(instituicao);
+		} else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/nome/{nome}")
@@ -71,19 +70,10 @@ public class InstituicaoResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
-	@ResponseBody
 	@Transactional
 	public ResponseEntity delete(@PathVariable("id")  Integer id) {
-		ResponseEntity response = null;
-		try {
-			this.dao.delete(id);
-			response = new ResponseEntity<HttpHeaders>(HttpStatus.ACCEPTED);
-		} catch (Exception e ) {
-			e.printStackTrace();
-			response = new ResponseEntity<>(new HeaderFactory().criaHeader("XErro", "Erro ao excluir"), 
-					HttpStatus.BAD_REQUEST);
-		}
-		return response;
+		this.service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

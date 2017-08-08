@@ -26,11 +26,7 @@ public class InstituicaoDAO {
 		this.entityManager.merge(instituicao);
 	}
 	
-	public void delete(Integer id) {
-		Instituicao instituicao = this.load(id);
-		if(instituicao==null) {
-			throw new RuntimeException("Instituicao "+ id + " não encontrada");
-		}
+	public void delete(Instituicao instituicao) {
 		this.entityManager.remove(instituicao);
 	}
 	

@@ -4,7 +4,7 @@ instituicaoService.service('instituicaoService', function($http) {
 	
 	this.grava = function(instituicao) {
 		if(instituicao.id!=null){
-			return $http.put('/formatura/api/v1/instituicoes', instituicao);
+			return $http.put('/formatura/api/v1/instituicoes/'+ instituicao.id, instituicao);
 		} else {
 			return $http.post('/formatura/api/v1/instituicoes', instituicao);
 		}
