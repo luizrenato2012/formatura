@@ -1,4 +1,4 @@
-package br.com.lrsantos.controller;
+package br.com.lrsantos.resource;
 
 public class ValidacaoException extends RuntimeException {
 

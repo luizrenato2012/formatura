@@ -11,6 +11,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -29,6 +31,8 @@ public class Instituicao {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_ID_INSTITUICAO")
 	private Integer id;
 	
+	@NotNull
+	@Size(min=3, max=50)
 	@Column(length=50)
 	private String nome;
 
@@ -38,6 +42,8 @@ public class Instituicao {
 	private Endereco endereco;
 	
 	@Column(length=15)
+	@NotNull
+	@Size(min=10, max=13)
 	private String telefone;
 	
 	public Integer getId() {

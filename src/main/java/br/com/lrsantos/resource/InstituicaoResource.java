@@ -1,7 +1,9 @@
-package br.com.lrsantos.controller;
+package br.com.lrsantos.resource;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,53 +16,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.lrsantos.model.bean.Instituicao;
 import br.com.lrsantos.model.dao.InstituicaoDAO;
 
-@Controller
+@RestController
 @RequestMapping("/instituicoes")
-public class InstituicaoController {
+public class InstituicaoResource {
 	
 	@Autowired
 	private InstituicaoDAO dao;
 	
 	@Transactional
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<String> inclui(@RequestBody Instituicao instituicao) {
-		try {
-			System.out.println(instituicao);
-			this.validaInstituicao(instituicao);
-			this.dao.insert(instituicao);
-			return new ResponseEntity(HttpStatus.CREATED);
-		} catch (Exception e  ) {
-			e.printStackTrace();
-			return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY);	
-		}
-	}
-	
-	private void validaInstituicao(Instituicao instiuicao) {
-		List<String >valoresInvalidos = new ArrayList<String>();
-		String mensagem = "";
-		
-		if(instiuicao==null){
-			throw new ValidacaoException("Produto invalido");
-		}
-		
-		String nome = instiuicao.getNome();
-		String telefone = instiuicao.getTelefone();
-		
-		if(nome==null || nome.equals("")){
-			valoresInvalidos.add(nome);
-		}
-		
-		if(telefone==null || telefone.equals("")){
-			valoresInvalidos.add(telefone);
-		}
-		
-		if(valoresInvalidos.size() != 0){
-			
-		}
+	public ResponseEntity<String> inclui(@Valid @RequestBody  Instituicao instituicao) {
+		this.dao.insert(instituicao);
+		return new ResponseEntity(HttpStatus.CREATED);
 	}
 	
 	@Transactional
