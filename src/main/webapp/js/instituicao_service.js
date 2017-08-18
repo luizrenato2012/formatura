@@ -1,7 +1,7 @@
 var instituicaoService = angular.module('InstituicaoServiceMdl',[]);
 
 instituicaoService.service('instituicaoService', function($http) {
-	 //teste
+	//teste
 	this.grava = function(instituicao) {
 		if(instituicao.id!=null){
 			return $http.put('/formatura/api/v1/instituicoes/'+ instituicao.id, instituicao);
